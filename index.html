@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Paul 🎂</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent: #1e56c8;
+      --accent-soft: #3b72e0;
+      --gold: #f7b733;
+      --bg-a: #36d1dc;
+      --bg-b: #5b86e5;
+      --bg-c: #1e3c72;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: linear-gradient(135deg, var(--bg-a), var(--bg-b), var(--bg-c));
+      background-size: 300% 300%;
+      animation: bgShift 12s ease infinite;
+      font-family: "Poppins", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      padding: 16px;
+    }
+
+    @keyframes bgShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* Floating balloons and stars in the background */
+    .floaters {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .floater {
+      position: absolute;
+      bottom: -50px;
+      opacity: 0;
+      animation: floatUp linear forwards;
+      user-select: none;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(-8deg); opacity: 0; }
+      10% { opacity: 0.9; }
+      50% { transform: translateY(-55vh) rotate(8deg); }
+      90% { opacity: 0.7; }
+      100% { transform: translateY(-115vh) rotate(-8deg); opacity: 0; }
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      top: -20px;
+      z-index: 30;
+      pointer-events: none;
+      border-radius: 2px;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0.8; }
+    }
+
+    /* Split Screen Halves */
+    .split-screen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .split-left, .split-right {
+      width: 50vw;
+      height: 100%;
+      background: linear-gradient(135deg, var(--bg-a), var(--bg-b));
+      transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .split-left { box-shadow: inset -8px 0 20px rgba(0, 0, 0, 0.15); }
+    .split-right { box-shadow: inset 8px 0 20px rgba(0, 0, 0, 0.15); }
+
+    .split-left.open { transform: translateX(-100%); }
+    .split-right.open { transform: translateX(100%); }
+
+    /* Hidden reveal underneath */
+    .reveal-container {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+      text-align: center;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 1s ease 0.6s;
+      padding: 0 16px;
+    }
+
+    .reveal-container.show {
+      opacity: 1;
+      transform: scale(1);
+      z-index: 20;
+    }
+
+    .reveal-photo-wrap {
+      position: relative;
+      margin-bottom: 22px;
+    }
+
+    .reveal-photo {
+      width: clamp(170px, 50vw, 230px);
+      height: clamp(170px, 50vw, 230px);
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: 50% 62%;
+      border: 6px solid var(--gold);
+      box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.6), 0 15px 35px rgba(0, 0, 0, 0.3);
+      animation: glow 2.4s infinite ease-in-out;
+      display: block;
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.6), 0 15px 35px rgba(0, 0, 0, 0.3); }
+      50% { box-shadow: 0 0 0 12px rgba(247, 183, 51, 0.45), 0 15px 45px rgba(0, 0, 0, 0.35); }
+    }
+
+    .badge {
+      position: absolute;
+      font-size: clamp(36px, 10vw, 48px);
+      animation: bounce 1.6s infinite ease-in-out;
+      filter: drop-shadow(0 6px 8px rgba(0,0,0,0.2));
+    }
+
+    .badge.crown { top: -38px; left: 50%; margin-left: -24px; animation-delay: 0.2s; }
+    .badge.cake { bottom: -10px; left: -28px; }
+    .badge.party { bottom: -10px; right: -28px; animation-delay: 0.4s; }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-10px) scale(1.05); }
+    }
+
+    .reveal-message {
+      color: var(--accent);
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(30px, 8vw, 44px);
+      letter-spacing: 1px;
+      line-height: 1.1;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 18px 30px;
+      border-radius: 24px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      max-width: 520px;
+    }
+
+    .reveal-sub {
+      margin-top: 16px;
+      color: #fff;
+      font-size: 15px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+
+    /* Card */
+    .card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 32px 32px 30px;
+      border-radius: 24px;
+      text-align: center;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 15px 35px rgba(20, 40, 100, 0.35);
+      animation: fadeIn 1.5s ease;
+      z-index: 20;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: 50% 62%;
+      border: 4px solid var(--gold);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      margin: -4px auto 10px;
+      display: block;
+    }
+
+    @keyframes wiggle {
+      0% { transform: rotate(0deg) scale(1); }
+      15% { transform: rotate(-4deg) scale(1.03); }
+      30% { transform: rotate(4deg) scale(1.03); }
+      45% { transform: rotate(-3deg) scale(1.02); }
+      60% { transform: rotate(3deg) scale(1.02); }
+      75% { transform: rotate(-1deg) scale(1.01); }
+      100% { transform: rotate(0deg) scale(1); }
+    }
+
+    .shake { animation: wiggle 0.8s ease-in-out; }
+
+    h1 {
+      color: var(--accent);
+      margin: 0 0 4px;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 40px;
+      letter-spacing: 1.5px;
+      font-weight: 400;
+    }
+
+    .to {
+      color: #6b7fa8;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin: 0 0 16px;
+    }
+
+    .message {
+      color: #4a5568;
+      font-size: 15px;
+      line-height: 1.7;
+      min-height: 9em;
+      margin: 0;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: var(--accent);
+      vertical-align: text-bottom;
+      animation: blink 0.8s steps(1) infinite;
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .signature {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 16px;
+      margin-top: 12px;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .buttons {
+      margin-top: 18px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.8s ease;
+      pointer-events: none;
+    }
+
+    .visible { opacity: 1 !important; transform: none !important; pointer-events: auto; }
+
+    button {
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      font-family: inherit;
+      font-weight: 500;
+      border-radius: 30px;
+      cursor: pointer;
+      margin: 8px;
+      transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+    }
+
+    button:active { transform: scale(0.95); }
+
+    .gift {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 6px 18px rgba(30, 86, 200, 0.4);
+      animation: pulse 2s infinite;
+    }
+
+    .gift:hover { background: var(--accent-soft); transform: translateY(-2px); }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 6px 18px rgba(30, 86, 200, 0.4); }
+      50% { box-shadow: 0 6px 28px rgba(30, 86, 200, 0.75); }
+    }
+
+    .wish { background: #fff3d6; color: #8a5a00; }
+    .wish:hover { background: #ffe9b3; transform: translateY(-2px); }
+
+    .wish-note {
+      margin-top: 14px;
+      color: #6b7fa8;
+      font-size: 14px;
+      line-height: 1.6;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: all 0.6s ease;
+    }
+
+    .wish-note.visible { max-height: 200px; }
+
+    /* Balloon-pop game */
+    .game {
+      position: fixed;
+      inset: 0;
+      z-index: 25;
+      display: none;
+      overflow: hidden;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .game.active { display: block; animation: fadeIn 0.6s ease; }
+    .game.done { opacity: 0; transition: opacity 0.8s ease; pointer-events: none; }
+
+    .game-header {
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 420px;
+      background: rgba(255, 255, 255, 0.93);
+      border-radius: 20px;
+      padding: 14px 16px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(20, 40, 100, 0.3);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .game-title {
+      font-family: "Bebas Neue", sans-serif;
+      color: var(--accent);
+      font-size: 32px;
+      letter-spacing: 1px;
+      margin: 0;
+    }
+
+    .game-sub {
+      color: #6b7fa8;
+      font-size: 13px;
+      margin: 2px 0 10px;
+    }
+
+    .slots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .slot {
+      width: 40px;
+      height: 46px;
+      border-radius: 10px;
+      border: 2px dashed #9db4e6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 28px;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .slot.filled {
+      border: 2px solid transparent;
+      background: var(--accent);
+      animation: popIn 0.4s ease;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.3); }
+      70% { transform: scale(1.25); }
+      100% { transform: scale(1); }
+    }
+
+    .balloon {
+      position: absolute;
+      bottom: -110px;
+      font-size: 64px;
+      line-height: 1;
+      cursor: pointer;
+      animation: rise linear forwards;
+      padding: 8px;
+    }
+
+    @keyframes rise {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(14px, -30vh); }
+      50% { transform: translate(-14px, -60vh); }
+      75% { transform: translate(14px, -90vh); }
+      100% { transform: translate(0, -125vh); }
+    }
+
+    .pop {
+      position: absolute;
+      font-size: 56px;
+      pointer-events: none;
+      animation: burst 0.45s ease-out forwards;
+    }
+
+    @keyframes burst {
+      0% { transform: scale(0.6); opacity: 1; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+
+    .win {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.5);
+      opacity: 0;
+      background: rgba(255, 255, 255, 0.96);
+      color: var(--accent);
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(32px, 9vw, 46px);
+      letter-spacing: 1px;
+      line-height: 1.15;
+      padding: 20px 32px;
+      border-radius: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      text-align: center;
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 3;
+      width: max-content;
+      max-width: calc(100% - 32px);
+    }
+
+    .win.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+    @keyframes fadeIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 420px) {
+      .balloon { font-size: 56px; }
+      .card { padding: 26px 20px 24px; }
+      .avatar { width: 84px; height: 84px; }
+      h1 { font-size: 36px; }
+      .message { font-size: 14px; }
+      button { padding: 11px 20px; font-size: 15px; margin: 6px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="floaters" id="floaters"></div>
+
+  <!-- Hidden reveal shown when the gift opens -->
+  <div class="reveal-container" id="revealContainer">
+    <div class="reveal-photo-wrap">
+      <span class="badge crown">👑</span>
+      <img class="reveal-photo" src="paul.jpg" alt="Paul" />
+      <span class="badge cake">🎂</span>
+      <span class="badge party">🎉</span>
+    </div>
+    <div class="reveal-message">Happy Birthday, Paul! 🥳<br />Here's to more wins &amp; good vibes! 🙌</div>
+    <div class="reveal-sub">Keep shining, bro. Your boy, Junior 💙</div>
+  </div>
+
+  <!-- Balloon-pop game played before the gift opens -->
+  <div class="game" id="game">
+    <div class="game-header">
+      <p class="game-title">Pop the balloons! 🎈</p>
+      <p class="game-sub" id="gameSub">Pop the balloons to spell the birthday boy's name</p>
+      <div class="slots" id="slots"></div>
+    </div>
+    <div class="win" id="win">You spelled PAUL! 🎉<br />Your gift is ready…</div>
+  </div>
+
+  <div class="split-screen">
+    <div class="split-left" id="splitLeft"></div>
+    <div class="split-right" id="splitRight"></div>
+  </div>
+
+  <div class="card" id="mainCard">
+    <img class="avatar" src="paul.jpg" alt="Paul" />
+    <h1>🎈 Happy Birthday 🎈</h1>
+    <p class="to">For Paul</p>
+    <p class="message" id="message"><span class="cursor"></span></p>
+    <div class="signature" id="signature">— Cheers to you, from Junior 💙</div>
+
+    <div class="buttons" id="buttons">
+      <button class="gift" id="giftBtn">Open your gift 🎁</button>
+      <button class="wish" id="wishBtn">Make a wish ✨</button>
+    </div>
+
+    <div class="wish-note" id="wishNote">
+      Close your eyes, make your wish… 🕯️ May every one of them come true
+      this year, bro!
+    </div>
+  </div>
+
+  <script>
+    const text = "Happy Birthday, Paul! Another year older, wiser, and even more awesome. Thank you for being a real one: always there, always bringing the good vibes. May this new year bring you success in everything you do, good health, big wins, and plenty of reasons to smile. Keep shining, and enjoy your day to the fullest!";
+
+    const messageEl = document.getElementById("message");
+    const signature = document.getElementById("signature");
+    const buttons = document.getElementById("buttons");
+    const giftBtn = document.getElementById("giftBtn");
+    const wishBtn = document.getElementById("wishBtn");
+    const wishNote = document.getElementById("wishNote");
+    const mainCard = document.getElementById("mainCard");
+    const splitLeft = document.getElementById("splitLeft");
+    const splitRight = document.getElementById("splitRight");
+    const revealContainer = document.getElementById("revealContainer");
+    const floatersEl = document.getElementById("floaters");
+
+    // Typewriter effect for the message (tap the card to skip)
+    let i = 0;
+    let typing = true;
+    function finishTyping() {
+      typing = false;
+      messageEl.textContent = text;
+      signature.classList.add("visible");
+      setTimeout(() => buttons.classList.add("visible"), 400);
+    }
+    function type() {
+      if (!typing) return;
+      if (i <= text.length) {
+        messageEl.innerHTML = text.slice(0, i) + '<span class="cursor"></span>';
+        i++;
+        setTimeout(type, 32);
+      } else {
+        finishTyping();
+      }
+    }
+    setTimeout(type, 1200);
+    mainCard.addEventListener("click", (e) => {
+      if (typing && e.target.tagName !== "BUTTON") finishTyping();
+    });
+
+    // Floating balloons and stars in the background
+    const floaterChars = ["🎈", "🎈", "🎈", "⭐", "🎉", "🏆", "✨"];
+    function spawnFloater() {
+      const f = document.createElement("span");
+      f.className = "floater";
+      f.textContent = floaterChars[Math.floor(Math.random() * floaterChars.length)];
+      f.style.left = Math.random() * 100 + "vw";
+      f.style.fontSize = 18 + Math.random() * 26 + "px";
+      f.style.animationDuration = 7 + Math.random() * 6 + "s";
+      floatersEl.appendChild(f);
+      setTimeout(() => f.remove(), 14000);
+    }
+    setInterval(spawnFloater, 600);
+
+    // Confetti burst
+    const colors = ["#f7b733", "#36d1dc", "#1e56c8", "#ffffff", "#ff6b6b", "#06d6a0", "#a78bfa"];
+    function confetti(count) {
+      for (let n = 0; n < count; n++) {
+        setTimeout(() => {
+          const c = document.createElement("span");
+          c.className = "confetti";
+          const size = 6 + Math.random() * 8;
+          c.style.width = size + "px";
+          c.style.height = size * (0.4 + Math.random() * 0.8) + "px";
+          c.style.background = colors[Math.floor(Math.random() * colors.length)];
+          c.style.left = Math.random() * 100 + "vw";
+          c.style.animationDuration = 2.5 + Math.random() * 3 + "s";
+          document.body.appendChild(c);
+          setTimeout(() => c.remove(), 6000);
+        }, n * 25);
+      }
+    }
+
+    // Balloon-pop game: each pop reveals the next letter of his name
+    const game = document.getElementById("game");
+    const slotsEl = document.getElementById("slots");
+    const gameSub = document.getElementById("gameSub");
+    const win = document.getElementById("win");
+    const word = "PAUL";
+    const hues = [0, 40, 90, 160, 200, 260, 300, 330];
+    let popped = 0;
+    let spawner = null;
+
+    for (const _ of word) {
+      const s = document.createElement("div");
+      s.className = "slot";
+      slotsEl.appendChild(s);
+    }
+
+    function spawnBalloon() {
+      const b = document.createElement("div");
+      b.className = "balloon";
+      b.textContent = "🎈";
+      b.style.left = 5 + Math.random() * 75 + "vw";
+      b.style.filter = `drop-shadow(0 6px 8px rgba(0,0,0,0.15)) hue-rotate(${hues[Math.floor(Math.random() * hues.length)]}deg)`;
+      b.style.animationDuration = 4 + Math.random() * 3 + "s";
+      b.addEventListener("pointerdown", () => popBalloon(b), { once: true });
+      b.addEventListener("animationend", () => b.remove());
+      game.appendChild(b);
+    }
+
+    function popBalloon(b) {
+      if (popped >= word.length) return;
+      const rect = b.getBoundingClientRect();
+      const p = document.createElement("div");
+      p.className = "pop";
+      p.textContent = "💥";
+      p.style.left = rect.left + "px";
+      p.style.top = rect.top + "px";
+      game.appendChild(p);
+      setTimeout(() => p.remove(), 500);
+      b.remove();
+
+      const slot = slotsEl.children[popped];
+      slot.textContent = word[popped];
+      slot.classList.add("filled");
+      popped++;
+
+      const left = word.length - popped;
+      gameSub.textContent = left > 0
+        ? `${left} more to go! Keep popping 🎯`
+        : "You did it! 🥳";
+      if (left === 0) finishGame();
+    }
+
+    function startGame() {
+      game.classList.add("active");
+      spawnBalloon();
+      spawner = setInterval(spawnBalloon, 700);
+    }
+
+    function finishGame() {
+      clearInterval(spawner);
+      confetti(60);
+      setTimeout(() => win.classList.add("show"), 300);
+      setTimeout(() => {
+        game.classList.add("done");
+        openGift();
+      }, 2600);
+      setTimeout(() => game.remove(), 3500);
+    }
+
+    function openGift() {
+      splitLeft.classList.add("open");
+      splitRight.classList.add("open");
+      revealContainer.classList.add("show");
+      confetti(150);
+      setInterval(() => confetti(20), 2500);
+    }
+
+    giftBtn.addEventListener("click", () => {
+      mainCard.classList.add("shake");
+      setTimeout(() => {
+        mainCard.style.display = "none";
+        startGame();
+      }, 800);
+    });
+
+    wishBtn.addEventListener("click", () => {
+      wishNote.classList.add("visible");
+      wishBtn.textContent = "Wish made 🌟";
+      confetti(30);
+    });
+  </script>
+
+</body>
+</html>
